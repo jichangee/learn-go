@@ -2,15 +2,23 @@ package main
 
 import (
 	"fmt"
-	"strings"
+	"sync"
 	"time"
 )
 
+var wg sync.WaitGroup
+
+func download(url string) {
+	fmt.Println("start to download", url)
+	time.Sleep(time.Second)
+	wg.Done()
+}
+
 func main() {
-	fmt.Println("Hello World")
-
-	fmt.Println("Prefix", strings.HasPrefix("hello world", "hello"))
-
-	t := time.Now()
-	fmt.Println("t", t.Day())
+	for i := 0; i < 3; i++ {
+		wg.Add(1)
+		go download("a.com/" + string(i+'0'))
+	}
+	wg.Wait()
+	fmt.Println("Done!")
 }

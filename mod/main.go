@@ -8,7 +8,6 @@ import (
 
 func main() {
 	r := gin.Default()
-
 	defaultHandler := func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"path": c.FullPath(),
